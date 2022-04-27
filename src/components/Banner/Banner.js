@@ -3,11 +3,15 @@ import { makeStyles } from '@mui/styles';
 import Container from '@mui/material/Container'
 import { Typography } from '@mui/material';
 import Carousel from './Carousel/Carousel';
+import logo  from '../../assets/img/background4.png';
+
+
 
 
 const useStyles = makeStyles(() => ({
     banner: {
-        backgroundImage: "url('https://github.com/piyush-eon/react-crypto-tracker/blob/master/public/banner2.jpg?raw=true')",
+        backgroundImage: `url(${logo})`,
+        backgroundSize: "cover",
     },
     bannerContent: {
         height: 400,
@@ -22,7 +26,12 @@ const useStyles = makeStyles(() => ({
         flexDirection: "column",
         justifyContent: "center",
         textAlign: "center",
-    }
+    },
+    carousel: {
+        height: "50%",
+        display: "flex",
+        alignItems: "center",
+    },
 }));
 const Banner = () => {
 
@@ -51,7 +60,7 @@ const Banner = () => {
                         Be the first to know about the latest crypto news, prices, and more.
                     </Typography>
                 </div> 
-                <Carousel/>
+                <Carousel className={classes.carousel}/>
             </Container>
         </div>
     )

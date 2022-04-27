@@ -25,7 +25,7 @@ function App() {
           <Route path="/coins/:id" element={<Coin />} />
         </Routes>
 
-        alo alo
+        AppJS
       </div>
     </BrowserRouter>
   );
