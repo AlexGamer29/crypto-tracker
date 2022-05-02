@@ -1,16 +1,19 @@
-import { createTheme, responsiveFontSizes  } from '@mui/material/styles';
-import { makeStyles, ThemeProvider } from '@mui/styles';
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
+import { LinearProgress, Typography } from '@mui/material'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { SingleCoin } from '../../api/api';
 import { CoinInfo, Header } from '../../components'
 import { CryptoState } from '../../CryptoContext';
+import ReactHtmlParser from 'react-html-parser';
+import { numberWithCommas } from '../../components/Banner/Carousel/Carousel';
 
 let darkTheme = createTheme();
 darkTheme = responsiveFontSizes(darkTheme);
 
-const useStyles = makeStyles((darkTheme) => ({
+const useStyles = makeStyles({
     container: {
         display: 'flex',
         [darkTheme.breakpoints.down("md")]: {
@@ -20,16 +23,35 @@ const useStyles = makeStyles((darkTheme) => ({
     },
     sidebar: {
         width: '30%',
-        // [darkTheme.breakpoints.down("md")]: {
-        //     width: "100%",
-        // },
+        [darkTheme.breakpoints.down("md")]: {
+            width: "100%",
+        },
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: 25,
         borderRight: '2px solid grey',
     },
-}))
+    marketData: {
+        alignSelf: "start",
+        padding: 25,
+        paddingTop: 10,
+        width: "100%",
+        [darkTheme.breakpoints.down("md")]: {
+            display: "flex",
+            justifyContent: "space-between",
+        },
+        [darkTheme.breakpoints.down("sm")]: {
+            flexDirection: "column",
+            alignItems: "center",
+        },
+        [darkTheme.breakpoints.down("xs")]: {
+            alignItems: "flex-start",
+        },
+    },
+})
+
+
 
 const Coin = () => {
     const classes = useStyles();
@@ -46,17 +68,100 @@ const Coin = () => {
 
     useEffect(() => {
         fetchCoin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
+    if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
 
     return (
         <>
             <ThemeProvider theme={darkTheme}>
+                <Header />
                 <div className={classes.container}>
-                    <Header />
                     <div className={classes.sidebar}>
-                        Sidebar
+                        <img
+                            src={coin?.image.large}
+                            alt={coin?.name}
+                            height="200"
+                            style={{
+                                marginBottom: 20
+                            }}
+                        />
+                        <Typography variant="h3" style={{
+                            fontFamily: "Montserrat",
+                            fontWeight: "700",
+                            marginBottom: 20
+                        }} >
+                            {coin?.name}
+                        </Typography>
+
+                        <Typography variant="subtitle1" style={{
+                            width: "100%",
+                            fontFamily: "Montserrat",
+                            padding: 25,
+                            paddingBottom: 15,
+                            paddingTop: 0,
+                            textAlign: "justify"
+                        }}>
+                            {ReactHtmlParser(coin?.description.en.split(". ")[0])}.
+                        </Typography>
+
+                        <div className={classes.marketData}>
+                            <span style={{ display: "flex" }}>
+                                <Typography variant="h6" style={{
+                                    fontFamily: "Montserrat",
+                                    fontWeight: "700",
+                                    marginBottom: 20
+                                }} >
+                                    Rank:
+                                </Typography>
+                                &nbsp; &nbsp;
+                                <Typography variant="h6" style={{
+                                    fontFamily: "Montserrat",
+                                }} >
+                                    {coin?.market_cap_rank}
+                                </Typography>
+                            </span>
+                            <span style={{ display: "flex" }}>
+                                <Typography variant="h6" style={{
+                                    fontFamily: "Montserrat",
+                                    fontWeight: "700",
+                                    marginBottom: 20
+                                }} >
+                                    Current Price:
+                                </Typography>
+                                &nbsp; &nbsp;
+                                <Typography variant="h6" style={{
+                                    fontFamily: "Montserrat",
+                                }} >
+                                    {numberWithCommas(
+                                        coin?.market_data.current_price[currency.toLowerCase()]
+                                    )}
+                                    &nbsp;
+                                    {symbol}{" "}
+                                </Typography>
+                            </span>
+                            <span style={{ display: "flex" }}>
+                                <Typography variant="h6" style={{
+                                    fontFamily: "Montserrat",
+                                    fontWeight: "700",
+                                    marginBottom: 20
+                                }} >
+                                    Market Cap:{" "}
+                                </Typography>
+                                &nbsp; &nbsp;
+                                <Typography variant="h6" style={{
+                                    fontFamily: "Montserrat",
+                                }} >
+                                    {numberWithCommas(
+                                        coin?.market_data.market_cap[currency.toLowerCase()]
+                                        .toString().slice(0, -6)
+                                    )}
+                                    M &nbsp;
+                                    {symbol}{" "}
+                                </Typography>
+                            </span>
+                        </div>
                     </div>
 
                     <CoinInfo coin={coin} />
