@@ -65,6 +65,7 @@ const CoinsTable = () => {
 
     useEffect(() => {
         fetchCoins()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currency])
 
     const handleSearch = () => {
@@ -157,8 +158,9 @@ const CoinsTable = () => {
                                                         </div>
                                                     </TableCell>
                                                     <TableCell align='left' style={{ color: "white" }}>
-                                                        {symbol}{" "}
                                                         {numberWithCommas(row.current_price.toFixed(2))}
+                                                        &nbsp;
+                                                        {symbol}{" "}
                                                     </TableCell>
                                                     <TableCell align='left'
                                                         style={{
@@ -169,11 +171,11 @@ const CoinsTable = () => {
                                                         {row.price_change_percentage_24h.toFixed(2)}%
                                                     </TableCell>
                                                     <TableCell align='left' style={{ color: "white" }}>
-                                                        {symbol}{" "}
                                                         {numberWithCommas(
                                                             row.market_cap.toString().slice(0, -6)
                                                         )}
-                                                        M
+                                                        M &nbsp;
+                                                        {symbol}{" "}
                                                     </TableCell>
                                                 </TableRow>
                                             )
