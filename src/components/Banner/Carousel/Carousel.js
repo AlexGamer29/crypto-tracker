@@ -5,7 +5,6 @@ import { TrendingCoins } from '../../../api/api';
 import { CryptoState } from '../../../CryptoContext';
 import AliceCarousel from 'react-alice-carousel';
 import { Link } from 'react-router-dom';
-import { textTransform } from '@mui/system';
 
 const useStyles = makeStyles((theme) => ({
     carousel: {
@@ -40,7 +39,7 @@ const Carousel = () => {
         setTrendingCoins(data);
     }
 
-    console.log(trendingCoins);
+    // console.log(trendingCoins);
 
     useEffect(() => {
         fetchTrendingCoins();

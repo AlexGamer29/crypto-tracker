@@ -3,5 +3,5 @@ import Coin from "./Coin/Coin";
 
 export {
     Home,
-    Coin,
+    Coin
 }

@@ -42,8 +42,6 @@ const CoinsTable = () => {
 
     const { currency, symbol } = CryptoState();
 
-
-
     const navigate = useNavigate();
 
     const darkTheme = createTheme({
@@ -63,7 +61,7 @@ const CoinsTable = () => {
         setLoading(false)
     }
 
-    console.log(coins);
+    // console.log(coins);
 
     useEffect(() => {
         fetchCoins()
@@ -106,7 +104,8 @@ const CoinsTable = () => {
                                                     color: "black",
                                                     fontWeight: "700",
                                                     fontFamily: "inherit",
-                                                    fontSize: "1em"
+                                                    fontSize: "1em",
+                                                    textAlign: "left",
                                                 }}
                                                 key={head}
                                                 align={head === "Coin" ? "" : "right"}
@@ -157,11 +156,11 @@ const CoinsTable = () => {
                                                             <span style={{ color: "darkgrey", fontFamily: "inherit", fontWeight: 400 }}>{row.name}</span>
                                                         </div>
                                                     </TableCell>
-                                                    <TableCell align="right" style={{ color: "white" }}>
+                                                    <TableCell align='left' style={{ color: "white" }}>
                                                         {symbol}{" "}
                                                         {numberWithCommas(row.current_price.toFixed(2))}
                                                     </TableCell>
-                                                    <TableCell align="right"
+                                                    <TableCell align='left'
                                                         style={{
                                                             color: profit > 0 ? "rgb(14, 203, 129)" : "red",
                                                             fontWeight: 500,
@@ -169,7 +168,7 @@ const CoinsTable = () => {
                                                         {profit && "+"}
                                                         {row.price_change_percentage_24h.toFixed(2)}%
                                                     </TableCell>
-                                                    <TableCell align="right" style={{ color: "white" }}>
+                                                    <TableCell align='left' style={{ color: "white" }}>
                                                         {symbol}{" "}
                                                         {numberWithCommas(
                                                             row.market_cap.toString().slice(0, -6)
@@ -207,6 +206,10 @@ const CoinsTable = () => {
                         }}
                         classes={{ ul: classes.pagination }}
                         count={(handleSearch()?.length / 10).toFixed(0)}
+                        onChange={(_, value) => {
+                            setPage(value)
+                            window.scrollTo(0, 450)
+                        }}
                         renderItem={(item) => (
                             <PaginationItem
                                 components={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
