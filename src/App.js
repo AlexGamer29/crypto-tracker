@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import './App.css';
 import { Home, Coin } from './pages';
@@ -24,8 +23,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/coins/:id" element={<Coin />} />
         </Routes>
-
-        AppJS
       </div>
     </BrowserRouter>
   );
