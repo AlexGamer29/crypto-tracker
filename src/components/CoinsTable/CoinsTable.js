@@ -10,6 +10,12 @@ import { CoinList } from '../../api/api'
 import { CryptoState } from '../../CryptoContext'
 import { numberWithCommas } from '../Banner/Carousel/Carousel';
 
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
 const useStyles = makeStyles((darkTheme) => ({
     row: {
         backgroundColor: "#16171a",
@@ -29,7 +35,7 @@ const useStyles = makeStyles((darkTheme) => ({
     },
     right: {
         width: "50%",
-    }
+    },
 }))
 
 const CoinsTable = () => {
@@ -44,15 +50,6 @@ const CoinsTable = () => {
 
     const navigate = useNavigate();
 
-    const darkTheme = createTheme({
-        palette: {
-            primary: {
-                main: "#fff",
-            },
-            type: "dark",
-        },
-    });
-
     const fetchCoins = async () => {
         setLoading(true)
         const { data } = await axios.get(CoinList(currency));
@@ -65,7 +62,7 @@ const CoinsTable = () => {
 
     useEffect(() => {
         fetchCoins()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currency])
 
     const handleSearch = () => {
@@ -86,7 +83,10 @@ const CoinsTable = () => {
                 </Typography>
                 <TextField label="Search for cryptocurrency"
                     variant='outlined'
-                    style={{ marginBottom: 20, width: "100%" }}
+                    style={{ 
+                        marginBottom: 20, 
+                        width: "100%",
+                     }}
                     onChange={(e) => setSearch(e.target.value)} />
                 <TableContainer>
                     {
